@@ -1,0 +1,81 @@
+# Full local stack, per PRD section 10.
+#
+# Day-to-day dev on this Mac uses a lighter path (see explainer.md):
+#   Postgres  -> homebrew postgresql@18 already on the machine
+#   Qdrant    -> docker run qdrant/qdrant   (only container needed)
+#   Embedder  -> EMBEDDING_BACKEND=fastembed (in-process ONNX, no service)
+#   Reranker  -> RERANKER_BACKEND=fastembed
+#
+# This file exists for the full-fidelity stack: TEI serving bge-m3 the same
+# way the cluster will, so the HTTP client paths get exercised.
+services:
+  rag-api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports: ["8000:8000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://rag:changeme@postgres:5432/rag_db
+      QDRANT_URL: http://qdrant:6333
+      EMBEDDING_URL: http://embedder:80
+      RERANKER_URL: http://reranker:80
+    depends_on: [postgres, qdrant]
+
+  ingestion-worker:
+    build: .
+    command: python workers/ingestion_worker.py
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://rag:changeme@postgres:5432/rag_db
+      EMBEDDING_URL: http://embedder:80
+    depends_on: [postgres]
+
+  outbox-worker:
+    build: .
+    command: python workers/outbox_worker.py
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://rag:changeme@postgres:5432/rag_db
+      QDRANT_URL: http://qdrant:6333
+    depends_on: [postgres, qdrant]
+
+  reaper:
+    build: .
+    command: python workers/reaper.py
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://rag:changeme@postgres:5432/rag_db
+    depends_on: [postgres]
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: rag_db
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.0
+    ports: ["6333:6333", "6334:6334"]
+    volumes: [qdrant_storage:/qdrant/storage]
+
+  # TEI: dense embeddings. On the cluster this runs bge-m3 on GPU.
+  embedder:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.8
+    command: --model-id BAAI/bge-m3 --port 80
+    ports: ["8081:80"]
+    volumes: [hf_cache:/data]
+
+  # TEI: cross-encoder reranker.
+  reranker:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.8
+    command: --model-id BAAI/bge-reranker-v2-m3 --port 80
+    ports: ["8082:80"]
+    volumes: [hf_cache:/data]
+
+volumes:
+  pgdata:
+  qdrant_storage:
+  hf_cache:

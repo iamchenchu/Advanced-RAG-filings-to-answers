@@ -1,0 +1,516 @@
+{
+  "summary": {
+    "dense": {
+      "hit@1": 0.4444,
+      "hit@5": 0.6111,
+      "hit@10": 0.7778,
+      "mrr": 0.561
+    },
+    "sparse": {
+      "hit@1": 0.0556,
+      "hit@5": 0.1667,
+      "hit@10": 0.3333,
+      "mrr": 0.1227
+    },
+    "hybrid": {
+      "hit@1": 0.3333,
+      "hit@5": 0.6667,
+      "hit@10": 0.7778,
+      "mrr": 0.4579
+    },
+    "full": {
+      "hit@1": 0.4444,
+      "hit@5": 0.4444,
+      "hit@10": 0.6667,
+      "mrr": 0.487
+    }
+  },
+  "per_query": [
+    {
+      "query": "What are Apple's main supply chain risks?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.3333333333333333
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      }
+    },
+    {
+      "query": "How does Apple describe competition in the smartphone market?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.058823529411764705
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.125
+      }
+    },
+    {
+      "query": "What lawsuits does Apple face over the App Store?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.022222222222222223
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "How is the board involved in overseeing cyber threats at Apple?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.058823529411764705
+      }
+    },
+    {
+      "query": "How much stock did Apple buy back and what dividends were declared?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.037037037037037035
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.07142857142857142
+      }
+    },
+    {
+      "query": "Who is Apple's independent registered public accounting firm?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What was Apple's revenue in its products and services segments?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.02564102564102564
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1
+      }
+    },
+    {
+      "query": "What risks does Microsoft see in AI development and deployment?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      }
+    },
+    {
+      "query": "Which reportable segments does Microsoft disclose?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.3333333333333333
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "How do US export controls limit NVIDIA's sales to China?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What competition does Amazon Web Services face?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.029411764705882353
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.05555555555555555
+      }
+    },
+    {
+      "query": "What does Tesla say about its self-driving capabilities?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "How much has Meta invested in Reality Labs and the metaverse?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.05555555555555555
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.06666666666666667
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      }
+    },
+    {
+      "query": "What antitrust actions is Alphabet defending?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What credit risks does JPMorgan carry in its lending business?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.02702702702702703
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "How is Walmart growing its online business?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.07692307692307693
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.07142857142857142
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.07692307692307693
+      }
+    },
+    {
+      "query": "What talc-related litigation does Johnson & Johnson face?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.047619047619047616
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.029411764705882353
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.027777777777777776
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      }
+    },
+    {
+      "query": "What seasonality does Apple's business show?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.045454545454545456
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    }
+  ]
+}

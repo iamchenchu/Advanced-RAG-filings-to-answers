@@ -1,0 +1,15 @@
+# CI: unit tests on every push. The unit suite is pure math (BM25/RRF/MMR/
+# context/chunker) — no Postgres, no Qdrant, no model downloads — so it runs
+# in seconds anywhere. Integration against live services stays local/manual
+# for now (see explainer.md "quality gates").
+name: ci
+on: [push, pull_request]
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install fastapi pydantic pydantic-settings numpy pytest python-dotenv prometheus-client
+      - run: python -m pytest tests/unit -q

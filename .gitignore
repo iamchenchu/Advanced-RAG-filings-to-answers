@@ -1,0 +1,126 @@
+# ---------------------------------------------------------------------------
+# Advanced-RAG-System
+# ---------------------------------------------------------------------------
+
+# Secrets. .env.example IS committed, .env is never committed.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+credentials.json
+
+# ---------------------------------------------------------------------------
+# Corpus and derived data. This is the big one for this system.
+# 5,000 filings is roughly 20 to 30 GB raw. None of it belongs in git.
+# ---------------------------------------------------------------------------
+data/
+!data/.gitkeep
+filings/
+corpus/
+downloads/
+*.parquet
+*.arrow
+
+# Large intermediate jsonl. Small fixtures under tests/ are allowed.
+*.jsonl
+!tests/**/*.jsonl
+!evaluation/fixtures/*.jsonl
+
+# Embeddings and model caches
+embeddings/
+*.npy
+*.npz
+*.faiss
+models/
+.cache/
+huggingface/
+
+# ---------------------------------------------------------------------------
+# Local service volumes from docker-compose
+# ---------------------------------------------------------------------------
+qdrant_storage/
+postgres_data/
+pgdata/
+redis_data/
+volumes/
+
+# ---------------------------------------------------------------------------
+# Evaluation output
+# Committed:   evaluation/results/*.json   (the deliverable, see PRD 7.4)
+# Ignored:     raw per-query dumps, plots, scratch
+# ---------------------------------------------------------------------------
+evaluation/results/raw/
+evaluation/results/*.csv
+evaluation/results/*.png
+evaluation/scratch/
+ground_truth_cache/
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.hypothesis/
+
+# ---------------------------------------------------------------------------
+# Frontend (Next.js)
+# ---------------------------------------------------------------------------
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------------------------------------------------------------------------
+# Infrastructure
+# ---------------------------------------------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+kubeconfig
+*.kubeconfig
+
+# ---------------------------------------------------------------------------
+# Editors and OS
+# ---------------------------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json.example
+*.swp
+*~
+
+# ---------------------------------------------------------------------------
+# Logs and scratch
+# ---------------------------------------------------------------------------
+*.log
+logs/
+tmp/
+scratch/
+notebooks/scratch/
+.ipynb_checkpoints/

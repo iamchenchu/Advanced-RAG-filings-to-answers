@@ -1,0 +1,21 @@
+# Nightly eval (PRD section 8: rag_recall_at_10 comes "from nightly eval").
+# Requires a runner with network access to the deployed Qdrant + Postgres —
+# wire the secrets when the cluster exists; the job is ready.
+name: nightly-eval
+on:
+  schedule: [{ cron: "0 6 * * *" }]
+  workflow_dispatch: {}
+jobs:
+  recall:
+    runs-on: ubuntu-latest
+    if: ${{ vars.EVAL_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - run: python evaluation/run_eval.py --config nightly
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          QDRANT_URL: ${{ secrets.QDRANT_URL }}
+          QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}

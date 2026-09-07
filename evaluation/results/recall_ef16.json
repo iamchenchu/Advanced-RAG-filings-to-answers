@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "config_name": "ef16",
+    "ef_search": 16,
+    "n_queries": 20,
+    "recall@1": 0.95,
+    "recall@5": 0.91,
+    "recall@10": 0.91,
+    "mrr": 0.95,
+    "latency_p50_ms": 463.18,
+    "latency_p95_ms": 632.99,
+    "latency_p99_ms": 648.34,
+    "embedding_model": "BAAI/bge-m3",
+    "hnsw": {
+      "m": 16,
+      "ef_construct": 128
+    },
+    "quantization": "none"
+  },
+  "per_query": [
+    {
+      "query": "What are Apple's main supply chain risks?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "How much revenue did the iPhone generate?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What legal proceedings is Apple involved in?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "Who audits Apple's financial statements?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What is Apple's dividend and share repurchase program?",
+      "recall@1": 0.0,
+      "recall@5": 0.4,
+      "recall@10": 0.3,
+      "mrr": 0.0
+    },
+    {
+      "query": "How does Apple manage cybersecurity threats?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 0.9,
+      "mrr": 1.0
+    },
+    {
+      "query": "What are the risks from competition in the smartphone market?",
+      "recall@1": 1.0,
+      "recall@5": 0.6,
+      "recall@10": 0.8,
+      "mrr": 1.0
+    },
+    {
+      "query": "How much did Apple spend on research and development?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What is Apple's exposure to foreign exchange risk?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 0.9,
+      "mrr": 1.0
+    },
+    {
+      "query": "Where are Apple's products manufactured?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What services does Apple offer?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What are the risks related to the App Store and regulation?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What was Apple's total net sales this fiscal year?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "How many employees does Apple have?",
+      "recall@1": 1.0,
+      "recall@5": 0.6,
+      "recall@10": 0.6,
+      "mrr": 1.0
+    },
+    {
+      "query": "What properties and facilities does Apple own?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What is Apple's effective tax rate?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What are Apple's obligations under the Digital Markets Act?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "How does Apple account for marketable securities?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    },
+    {
+      "query": "What controls and procedures does management maintain?",
+      "recall@1": 1.0,
+      "recall@5": 0.6,
+      "recall@10": 0.7,
+      "mrr": 1.0
+    },
+    {
+      "query": "What intellectual property risks does Apple face?",
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
+    }
+  ]
+}
