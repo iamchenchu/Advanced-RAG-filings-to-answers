@@ -162,9 +162,11 @@ app/api/query.py :: query() L29
   |  QueryRequest schema (schemas.py: extra="forbid" -> unknown filter = 400)
   v
 app/retrieval/pipeline.py :: run_query() L63     <- the conductor, read top to bottom
-  |  every stage wrapped in `with t.stage(...)` (timings + Prometheus)
+  |  every stage wrapped in `with t.stage(...)` - ONE wrapper, THREE outputs:
+  |  timings_ms (response) + Prometheus histogram + OpenTelemetry span
+  |  (app/observability/tracing.py; view waterfalls at localhost:16686)
   |
-  |  1 rewrite   clients/inference.py (optional, off without an LLM)
+  |  1 rewrite   clients/inference.py (optional; LLM = ollama llama3.2:3b locally)
   |  2 embed     clients/embedder.py :: embed_one()   ONNX BGE-M3, ~92ms
   |  3 dense     retrieval/dense.py :: dense_search()     - Qdrant HNSW top 100
   |    sparse    retrieval/sparse_search.py :: sparse_search()
@@ -177,9 +179,20 @@ app/retrieval/pipeline.py :: run_query() L63     <- the conductor, read top to b
   |  6 rerank    clients/reranker.py :: rerank()    cross-encoder on ~20
   |  7 context   retrieval/context_builder.py :: build_context() L23
   |               dedupe >= .95 -> per-doc cap 3 -> token budget -> citation ids
-  |  8 generate  clients/inference.py :: chat()     degrades to answer:null
+  |  8 generate  clients/inference.py :: chat()     real cited answers via
+  |              ollama; STILL degrades to answer:null if the LLM is down
   v
 QueryResponse: answer, citations[], timings_ms, degraded[]
+
+STREAMING VARIANT (stream: true + generate: true):
+app/api/query.py :: query() L34 -> _stream_query() L55
+  |  runs the SAME pipeline with generate=False (all stages above), then
+  |  emits SSE (Server-Sent Events):
+  |    event: citations   <- FIRST, so the client renders sources immediately
+  |    event: token ...   <- clients/inference.py :: chat_stream() L102,
+  |                          sync httpx stream bridged to async via to_thread
+  |    event: done        <- usage totals
+  |  LLM dies mid-stream? citations already delivered - degradation holds.
 ```
 
 What to look for:
@@ -222,6 +235,9 @@ markers silently skipped 4,000 chunks; a consistency count caught it).
 ```
 evaluation/run_eval.py       recall@K of HNSW vs chunks_flat (ANN error only)
 evaluation/experiments/ef_sweep.py    the recall-vs-latency curve
+evaluation/experiments/filter_selectivity.py   Experiment 5: does pre-filtering
+                             hold recall as filters tighten? (yes: 1.0 at 0.002%)
+evaluation/experiments/load_test.py   concurrency vs p95 - the HPA sizing number
 evaluation/build_golden.py   content-anchored labels -> golden.jsonl
 evaluation/run_golden.py     dense vs sparse vs hybrid vs full, hit@K + MRR
 ```
@@ -242,6 +258,9 @@ invalidates them.
 | app/observability/metrics.py | every Prometheus metric name | building dashboards |
 | app/api/schemas.py | the public contract (mirrors openapi.json) | changing the API |
 | migrations/*.sql | the schema, in order | understanding any table |
+| app/observability/tracing.py | OTel setup; graceful no-op without endpoint | reading trace code |
+| observability/ | prometheus+grafana+jaeger as code, alert rules | running the dashboards |
+| deploy/k8s/ | the whole system as Kubernetes manifests (see its README) | the k8s deployment |
 
 ---
 
