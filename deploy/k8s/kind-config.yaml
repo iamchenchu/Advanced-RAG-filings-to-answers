@@ -1,0 +1,12 @@
+# kind (Kubernetes IN Docker) cluster for the RAG system.
+# The extraMount shares the host's Hugging Face model cache with the node, so
+# the API pod mounts the already-downloaded 2.3GB BGE-M3 ONNX model instead of
+# re-downloading it on every pod start.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: rag
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: /Users/mekalathuruchenchaiah/.cache/huggingface
+        containerPath: /hf-cache

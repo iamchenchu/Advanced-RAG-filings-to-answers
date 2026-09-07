@@ -1,0 +1,26 @@
+# Alerting rules for the two SILENT failure modes - no exceptions, no error
+# rates, just work quietly not happening. These two gauges are the only
+# reliable detectors (see COMPONENTS.md section 6 / interview-prep 05).
+groups:
+  - name: rag-silent-failures
+    rules:
+      - alert: IngestionStalled
+        expr: rag_ingestion_jobs_pending > 10
+        for: 15m
+        labels: { severity: warning }
+        annotations:
+          summary: "Ingestion queue not draining"
+          description: "{{ $value }} jobs pending for 15m - workers dead or stuck. Check: kubectl -n llm-rag get pods / worker logs."
+      - alert: QdrantSyncStalled
+        expr: rag_outbox_pending_total > 100
+        for: 15m
+        labels: { severity: critical }
+        annotations:
+          summary: "Vector outbox not draining - retrieval going stale"
+          description: "{{ $value }} chunks pending Qdrant sync for 15m. New/changed documents are invisible to search. Check outbox worker + Qdrant health."
+      - alert: RagApiDown
+        expr: up{job="rag-api"} == 0
+        for: 2m
+        labels: { severity: critical }
+        annotations:
+          summary: "RAG API scrape target down"
