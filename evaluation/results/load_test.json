@@ -1,0 +1,44 @@
+{
+  "levels": [
+    {
+      "concurrency": 1,
+      "requests": 40,
+      "qps": 2.2,
+      "p50_ms": 388.4,
+      "p95_ms": 775.7,
+      "p99_ms": 1106.6
+    },
+    {
+      "concurrency": 2,
+      "requests": 40,
+      "qps": 3.8,
+      "p50_ms": 514.0,
+      "p95_ms": 638.6,
+      "p99_ms": 754.6
+    },
+    {
+      "concurrency": 4,
+      "requests": 40,
+      "qps": 4.5,
+      "p50_ms": 861.2,
+      "p95_ms": 1058.6,
+      "p99_ms": 1150.6
+    },
+    {
+      "concurrency": 8,
+      "requests": 40,
+      "qps": 3.3,
+      "p50_ms": 2303.4,
+      "p95_ms": 3465.6,
+      "p99_ms": 3609.6
+    },
+    {
+      "concurrency": 16,
+      "requests": 40,
+      "qps": 1.8,
+      "p50_ms": 8578.4,
+      "p95_ms": 11387.6,
+      "p99_ms": 11917.1
+    }
+  ]
+}
