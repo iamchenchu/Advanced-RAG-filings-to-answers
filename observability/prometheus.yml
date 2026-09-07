@@ -4,8 +4,17 @@
 global:
   scrape_interval: 5s
 
+rule_files:
+  - /etc/prometheus/alerts.yml
+
 scrape_configs:
   - job_name: rag-api
     metrics_path: /metrics
     static_configs:
       - targets: ["host.docker.internal:8000"]
+
+  # workers expose their own registries when started with METRICS_PORT set
+  # (each process has its own counters - the API cannot see worker metrics)
+  - job_name: rag-workers
+    static_configs:
+      - targets: ["host.docker.internal:9101", "host.docker.internal:9102"]

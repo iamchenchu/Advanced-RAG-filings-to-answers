@@ -1,0 +1,28 @@
+# The reaper as a CronJob: resets jobs from dead workers, dead-letters
+# poison documents. concurrencyPolicy Forbid = never two reapers at once.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reaper
+  namespace: llm-rag
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          hostAliases:
+            # kind pods cannot resolve host.docker.internal via cluster DNS;
+            # this maps it to the Docker Desktop host gateway explicitly.
+            - ip: "192.168.65.254"
+              hostnames: ["host.docker.internal"]
+          containers:
+            - name: reaper
+              image: rag-api:local
+              imagePullPolicy: Never
+              command: ["python", "workers/reaper.py", "--once"]
+              envFrom:
+                - configMapRef: { name: rag-config }
+                - secretRef: { name: rag-secrets }

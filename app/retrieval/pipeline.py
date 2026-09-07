@@ -65,8 +65,19 @@ class timings:
                 STAGE_DURATION.labels(stage=name).observe(dt)
 
 
+def generation_messages(query: str, context_text: str) -> list[dict]:
+    """The exact prompt the non-streaming path uses - one builder, two paths,
+    so streamed and non-streamed answers can never drift apart."""
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",
+         "content": f"Context passages:\n\n{context_text}\n\nQuestion: {query}"},
+    ]
+
+
 async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
-                    generate: bool = True, include_debug: bool = False) -> dict:
+                    generate: bool = True, include_debug: bool = False,
+                    return_context: bool = False) -> dict:
     s = get_settings()
     t = timings()
     degraded: list[str] = []
@@ -222,10 +233,7 @@ async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
             try:
                 out = await asyncio.to_thread(
                     get_inference().chat,
-                    [{"role": "system", "content": SYSTEM_PROMPT},
-                     {"role": "user",
-                      "content": f"Context passages:\n\n{ctx['context_text']}\n\n"
-                                 f"Question: {query}"}],
+                    generation_messages(query, ctx["context_text"]),
                 )
                 answer = out["text"]
                 usage = out["usage"] or usage
@@ -237,6 +245,7 @@ async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
     root.__exit__(None, None, None)
 
     response = {
+        **({"_context_text": ctx["context_text"]} if return_context else {}),
         "answer": answer,
         "citations": ctx["citations"],
         "usage": usage,

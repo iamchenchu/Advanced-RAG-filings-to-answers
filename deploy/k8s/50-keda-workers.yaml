@@ -1,0 +1,21 @@
+# THE right signal for workers: queue depth, not CPU. KEDA polls Prometheus
+# for rag_ingestion_jobs_pending (the gauge the API already exports) and
+# scales the worker Deployment 1..6 to hold ~10 pending jobs per replica.
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: ingestion-worker-scaler
+  namespace: llm-rag
+spec:
+  scaleTargetRef:
+    name: ingestion-worker
+  minReplicaCount: 1
+  maxReplicaCount: 6
+  pollingInterval: 10
+  cooldownPeriod: 60
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://host.docker.internal:9090
+        query: rag_ingestion_jobs_pending
+        threshold: "10"

@@ -2,7 +2,11 @@
 api/query.py — POST /api/v1/query, the endpoint Multi-Agent consumes.
 """
 
+import asyncio
+import json
+
 from fastapi import APIRouter
+from fastapi.responses import StreamingResponse
 from fastapi.responses import JSONResponse
 
 from app.api.schemas import QueryRequest, QueryResponse
@@ -27,6 +31,9 @@ router = APIRouter()
                             "degraded": ["dense_unavailable", "sparse_unavailable"]}}}}},
     })
 async def query(req: QueryRequest):
+    if req.stream and req.generate:
+        return await _stream_query(req)
+
     filters = req.filters.model_dump(exclude_none=True) if req.filters else None
     try:
         result = await run_query(
@@ -43,3 +50,54 @@ async def query(req: QueryRequest):
                       "message": "no retrieval path available",
                       "degraded": result.get("degraded")}})
     return result
+
+
+async def _stream_query(req: QueryRequest):
+    """stream: true - Server-Sent Events (SSE).
+
+    Event order is the contract:
+      1. `citations`  - the full retrieval result (ids resolve immediately, so
+                        a consumer can render sources before any prose exists)
+      2. `delta`      - answer text fragments as the LLM emits them
+      3. `done`       - degraded flags; or `generation_unavailable` if the LLM
+                        failed before/while streaming (citations still stand)
+    """
+    from app.clients.inference import InferenceUnavailable, get_inference
+    from app.retrieval.pipeline import generation_messages, run_query
+
+    filters = req.filters.model_dump(exclude_none=True) if req.filters else None
+    result = await run_query(
+        query=req.query, top_k=req.top_k, filters=filters,
+        generate=False, include_debug=req.include_debug, return_context=True,
+    )
+    if result.get("error_type"):        # retrieval itself unavailable: plain JSON error
+        return JSONResponse(status_code=503, content={
+            "error": {"type": result["error_type"],
+                      "message": "no retrieval path available",
+                      "degraded": result.get("degraded", [])}})
+
+    context_text = result.pop("_context_text", "")
+
+    async def events():
+        payload = {k: v for k, v in result.items() if k != "answer"}
+        yield f"event: citations\ndata: {json.dumps(payload)}\n\n"
+
+        degraded = list(result.get("degraded") or [])
+        if result["citations"]:
+            messages = generation_messages(req.query, context_text)
+            gen = get_inference().chat_stream(messages)
+            sentinel = object()
+            try:
+                while True:
+                    # the client generator is synchronous (httpx stream);
+                    # step it off the event loop one chunk at a time
+                    chunk = await asyncio.to_thread(next, gen, sentinel)
+                    if chunk is sentinel:
+                        break
+                    yield f"event: delta\ndata: {json.dumps({'text': chunk})}\n\n"
+            except InferenceUnavailable:
+                degraded.append("generation_unavailable")
+        yield f"event: done\ndata: {json.dumps({'degraded': degraded})}\n\n"
+
+    return StreamingResponse(events(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache"})

@@ -1,0 +1,24 @@
+# Non-secret configuration for in-cluster pods.
+# host.docker.internal = the Mac, where Postgres/Qdrant/Ollama/Prometheus run.
+# Stateful stores stay OUTSIDE the cluster on purpose: pods are cattle,
+# databases are not - this mirrors the managed-database pattern in production.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rag-config
+  namespace: llm-rag
+data:
+  ENV: "k8s-local"
+  QDRANT_URL: "http://host.docker.internal:6333"
+  EMBEDDING_MODEL: "BAAI/bge-m3"
+  EMBEDDING_DIM: "1024"
+  EMBEDDING_BACKEND: "onnx"            # API pods embed queries; model comes from the hostPath cache
+  HF_HOME: "/root/.cache/huggingface"  # -> the mounted host cache, no 2.3GB download
+  QUANTIZATION: "scalar"
+  HNSW_EF_SEARCH: "32"
+  INFERENCE_URL: "http://host.docker.internal:11434/v1"
+  INFERENCE_MODEL: "llama3.2:3b"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://host.docker.internal:4318"
+  OTEL_SERVICE_NAME: "rag-api-k8s"
+  SEC_USER_AGENT: "Chenchaiah Mekalathuru mekalathuru.chenchaiah@gmail.com"
+  GCS_BUCKET: "llm-platform-services-bucket"

@@ -1,0 +1,35 @@
+# Stateless poll-loop workers. Scale replicas freely: the Postgres
+# FOR UPDATE SKIP LOCKED queue shares work with zero coordination.
+# EMBEDDING_BACKEND=defer: in-cluster workers parse+chunk+reconcile only
+# (vectors come from the GPU backfill path) - keeps pods small and modelless.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingestion-worker
+  namespace: llm-rag
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: ingestion-worker }
+  template:
+    metadata:
+      labels: { app: ingestion-worker }
+    spec:
+      hostAliases:
+        # kind pods cannot resolve host.docker.internal via cluster DNS;
+        # this maps it to the Docker Desktop host gateway explicitly.
+        - ip: "192.168.65.254"
+          hostnames: ["host.docker.internal"]
+      containers:
+        - name: worker
+          image: rag-api:local
+          imagePullPolicy: Never
+          command: ["python", "workers/ingestion_worker.py"]
+          envFrom:
+            - configMapRef: { name: rag-config }
+            - secretRef: { name: rag-secrets }
+          env:
+            - { name: EMBEDDING_BACKEND, value: "defer" }
+          resources:
+            requests: { cpu: 200m, memory: 512Mi }
+            limits:   { cpu: "1",  memory: 2Gi }

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-api
+  namespace: llm-rag
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: rag-api }
+  template:
+    metadata:
+      labels: { app: rag-api }
+    spec:
+      hostAliases:
+        # kind pods cannot resolve host.docker.internal via cluster DNS;
+        # this maps it to the Docker Desktop host gateway explicitly.
+        - ip: "192.168.65.254"
+          hostnames: ["host.docker.internal"]
+      containers:
+        - name: api
+          image: rag-api:local
+          imagePullPolicy: Never          # built locally, loaded via `kind load`
+          ports: [{ containerPort: 8000 }]
+          envFrom:
+            - configMapRef: { name: rag-config }
+            - secretRef: { name: rag-secrets }
+          volumeMounts:
+            - { name: hf-cache, mountPath: /root/.cache/huggingface }
+          resources:
+            requests: { cpu: 250m, memory: 1Gi }
+            limits:   { cpu: "2",  memory: 4Gi }   # ONNX BGE-M3 needs headroom
+          # Liveness = "is the process alive" - restarts a hung pod.
+          # Readiness = "can it serve" - fails ONLY when Postgres is down
+          # (by design: Qdrant/LLM outages DEGRADE, they don't remove the pod).
+          livenessProbe:
+            httpGet: { path: /health, port: 8000 }
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: { path: /ready, port: 8000 }
+            periodSeconds: 5
+            failureThreshold: 2
+          startupProbe:                    # first query loads the ONNX model
+            httpGet: { path: /health, port: 8000 }
+            failureThreshold: 30
+            periodSeconds: 5
+      volumes:
+        - name: hf-cache
+          hostPath: { path: /hf-cache, type: Directory }   # from kind extraMounts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-api
+  namespace: llm-rag
+spec:
+  selector: { app: rag-api }
+  ports: [{ port: 80, targetPort: 8000 }]

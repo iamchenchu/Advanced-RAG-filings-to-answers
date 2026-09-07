@@ -1,0 +1,20 @@
+# CPU-based autoscaling for the API (requires metrics-server).
+# NOTE the lesson from doc 04: CPU is the WRONG signal for GPU inference,
+# but the API pod is CPU-bound (ONNX embedding + rerank), so here it fits.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rag-api
+  namespace: llm-rag
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rag-api
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }
