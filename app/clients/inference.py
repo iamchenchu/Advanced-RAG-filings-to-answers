@@ -99,6 +99,55 @@ class InferenceClient:
         raise InferenceUnavailable(str(last))
 
 
+    def chat_stream(self, messages: list[dict], max_tokens: int = 1024):
+        """Streaming completion: yields text deltas as they arrive.
+
+        The retry discipline is the whole point of this method existing
+        separately: a retry is permitted ONLY while zero tokens have been
+        yielded. The moment the first delta goes out, any failure surfaces
+        as-is - re-running a half-emitted answer would duplicate text the
+        consumer already rendered.
+        """
+        import json as _json
+
+        self.breaker.check()
+        yielded_any = False
+        attempts = 0
+        while True:
+            try:
+                with httpx.stream(
+                    "POST", f"{self.url}/chat/completions",
+                    headers=self._headers(),
+                    json={"model": self.model, "messages": messages,
+                          "max_tokens": max_tokens, "stream": True},
+                    timeout=self.timeout,
+                ) as resp:
+                    resp.raise_for_status()
+                    for line in resp.iter_lines():
+                        if not line.startswith("data: "):
+                            continue
+                        payload = line[len("data: "):]
+                        if payload.strip() == "[DONE]":
+                            self.breaker.ok()
+                            return
+                        delta = (_json.loads(payload)["choices"][0]
+                                 .get("delta", {}).get("content"))
+                        if delta:
+                            yielded_any = True
+                            yield delta
+                    self.breaker.ok()
+                    return
+            except Exception as exc:              # noqa: BLE001
+                if yielded_any:
+                    # mid-stream failure: never retry, never duplicate
+                    raise InferenceUnavailable(f"stream broke mid-answer: {exc}") from exc
+                self.breaker.fail()
+                attempts += 1
+                if attempts > self.max_retries:
+                    raise InferenceUnavailable(str(exc)) from exc
+                self.breaker.check()
+
+
 _client: InferenceClient | None = None
 
 
