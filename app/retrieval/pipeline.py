@@ -28,6 +28,7 @@ from app.config import get_settings
 from app.observability.metrics import (CITATIONS_TOTAL, CONTEXT_TOKENS,
                                        QUERIES_TOTAL, RERANK_SCORE,
                                        RETRIEVED_DOCS, STAGE_DURATION)
+from app.observability.tracing import span as trace_span
 from app.retrieval.context_builder import build_context
 from app.retrieval.dense import dense_search
 from app.retrieval.fusion import rrf, weighted
@@ -51,13 +52,17 @@ class timings:
 
     @contextmanager
     def stage(self, name: str):
+        # one wrapper, three outputs: timings_ms (API response), Prometheus
+        # histogram (dashboards), and an OpenTelemetry span (trace waterfall).
+        # A stage added through this manager is instrumented everywhere at once.
         t0 = time.perf_counter()
-        try:
-            yield
-        finally:
-            dt = time.perf_counter() - t0
-            self.data[name] = round(dt * 1000, 1)
-            STAGE_DURATION.labels(stage=name).observe(dt)
+        with trace_span(f"rag.{name}"):
+            try:
+                yield
+            finally:
+                dt = time.perf_counter() - t0
+                self.data[name] = round(dt * 1000, 1)
+                STAGE_DURATION.labels(stage=name).observe(dt)
 
 
 async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
@@ -66,6 +71,11 @@ async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
     t = timings()
     degraded: list[str] = []
     debug: dict = {"original_query": query}
+    # root span: every stage span below nests under this one trace
+    root = trace_span("rag.query", query_length=len(query), top_k=top_k,
+                      generate=generate,
+                      filters=",".join(sorted(filters)) if filters else "")
+    root.__enter__()
 
     # ---- 1. rewrite (optional, LLM) ---------------------------------------
     search_query = query
@@ -128,6 +138,7 @@ async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
     if dense_failed and (sparse_failed or not s.sparse_enabled):
         QUERIES_TOTAL.labels(status="unavailable",
                              degraded=",".join(degraded) or "none").inc()
+        root.__exit__(None, None, None)
         return {"error_type": "retrieval_unavailable", "degraded": degraded,
                 "timings_ms": t.data}
 
@@ -223,6 +234,7 @@ async def run_query(query: str, top_k: int = 5, filters: dict | None = None,
 
     t.data["total"] = round(sum(v for k, v in t.data.items() if k != "total"), 1)
     QUERIES_TOTAL.labels(status="ok", degraded=",".join(degraded) or "none").inc()
+    root.__exit__(None, None, None)
 
     response = {
         "answer": answer,

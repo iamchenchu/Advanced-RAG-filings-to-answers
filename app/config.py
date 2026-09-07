@@ -113,6 +113,8 @@ class Settings(BaseSettings):
     rate_limit_queries_per_minute: int = 120
 
     metrics_enabled: bool = True
+    otel_exporter_otlp_endpoint: str = ""      # empty = tracing off
+    otel_service_name: str = "advanced-rag-system"
 
 
 @lru_cache
