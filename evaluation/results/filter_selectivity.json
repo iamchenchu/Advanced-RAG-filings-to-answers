@@ -1,0 +1,42 @@
+{
+  "query": "supply chain and manufacturing risks",
+  "corpus_points": 1736942,
+  "levels": [
+    {
+      "level": "no filter",
+      "match_pct": 100.0,
+      "recall_at_10": 0.9,
+      "p50_ms": 144.8,
+      "returned": 10,
+      "truth_available": 10
+    },
+    {
+      "level": "sector-ish: 50 tickers",
+      "match_pct": 5.725
+    },
+    {
+      "level": "one ticker (AAPL)",
+      "match_pct": 0.075,
+      "recall_at_10": 1.0,
+      "p50_ms": 27.4,
+      "returned": 10,
+      "truth_available": 10
+    },
+    {
+      "level": "one ticker + one item",
+      "match_pct": 0.017,
+      "recall_at_10": 1.0,
+      "p50_ms": 121.1,
+      "returned": 10,
+      "truth_available": 10
+    },
+    {
+      "level": "one ticker + item + year",
+      "match_pct": 0.002,
+      "recall_at_10": 1.0,
+      "p50_ms": 65.2,
+      "returned": 10,
+      "truth_available": 10
+    }
+  ]
+}
