@@ -1,28 +1,28 @@
 {
   "summary": {
     "dense": {
-      "hit@1": 0.4444,
-      "hit@5": 0.6111,
-      "hit@10": 0.7778,
-      "mrr": 0.561
+      "hit@1": 0.5667,
+      "hit@5": 0.6667,
+      "hit@10": 0.8333,
+      "mrr": 0.6481
     },
     "sparse": {
-      "hit@1": 0.0556,
-      "hit@5": 0.1667,
-      "hit@10": 0.3333,
-      "mrr": 0.1227
+      "hit@1": 0.2,
+      "hit@5": 0.3333,
+      "hit@10": 0.4667,
+      "mrr": 0.2727
     },
     "hybrid": {
-      "hit@1": 0.3333,
-      "hit@5": 0.6667,
-      "hit@10": 0.7778,
-      "mrr": 0.4579
+      "hit@1": 0.4,
+      "hit@5": 0.7667,
+      "hit@10": 0.8333,
+      "mrr": 0.5226
     },
     "full": {
-      "hit@1": 0.4444,
-      "hit@5": 0.4444,
-      "hit@10": 0.6667,
-      "mrr": 0.487
+      "hit@1": 0.4667,
+      "hit@5": 0.6,
+      "hit@10": 0.7333,
+      "mrr": 0.532
     }
   },
   "per_query": [
@@ -510,6 +510,330 @@
         "hit@5": 1.0,
         "hit@10": 1.0,
         "mrr": 1.0
+      }
+    },
+    {
+      "query": "How much did Microsoft invest in OpenAI?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What data center capacity constraints does Microsoft face?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.09090909090909091
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "How does NVIDIA describe demand for its data center products?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.14285714285714285
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What vehicle production capacity does Tesla report?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    {
+      "query": "What advertising revenue risks does Meta disclose?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.01639344262295082
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      }
+    },
+    {
+      "query": "How does Amazon describe its fulfillment network?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.1111111111111111
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.03571428571428571
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      }
+    },
+    {
+      "query": "What interest rate risks does JPMorgan manage?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.5
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      }
+    },
+    {
+      "query": "What store formats does Walmart operate?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What pharmaceutical segments does Johnson and Johnson report?",
+      "dense": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.09090909090909091
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What goodwill impairments has Alphabet recorded?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.2
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    {
+      "query": "How does Berkshire Hathaway describe its insurance float?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "hybrid": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "full": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      }
+    },
+    {
+      "query": "What dividend policy does Chevron describe?",
+      "dense": {
+        "hit@1": 1.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 1.0
+      },
+      "sparse": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 1.0,
+        "mrr": 0.16666666666666666
+      },
+      "hybrid": {
+        "hit@1": 0.0,
+        "hit@5": 1.0,
+        "hit@10": 1.0,
+        "mrr": 0.25
+      },
+      "full": {
+        "hit@1": 0.0,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "mrr": 0.07692307692307693
       }
     }
   ]

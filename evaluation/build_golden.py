@@ -68,6 +68,31 @@ SPEC = [
      "JNJ", None, ["talc"]),         # JNJ spreads talc across 1A/7/8
     ("What seasonality does Apple's business show?",
      "AAPL", "1", ["Seasonality"]),
+    # --- growth batch 2 (2026-09-07): broader companies and item types ---
+    ("How much did Microsoft invest in OpenAI?",
+     "MSFT", None, ["OpenAI"]),
+    ("What data center capacity constraints does Microsoft face?",
+     "MSFT", "1A", ["datacenter"]),
+    ("How does NVIDIA describe demand for its data center products?",
+     "NVDA", "7", ["Data Center"]),
+    ("What vehicle production capacity does Tesla report?",
+     "TSLA", "1", ["production"]),
+    ("What advertising revenue risks does Meta disclose?",
+     "META", "1A", ["advertising"]),
+    ("How does Amazon describe its fulfillment network?",
+     "AMZN", "1", ["fulfillment"]),
+    ("What interest rate risks does JPMorgan manage?",
+     "JPM", None, ["interest rate"]),   # banks keep market risk outside 7A
+    ("What store formats does Walmart operate?",
+     "WMT", "1", ["Supercenters"]),
+    ("What pharmaceutical segments does Johnson and Johnson report?",
+     "JNJ", "1", ["pharmaceutical"]),
+    ("What goodwill impairments has Alphabet recorded?",
+     "GOOGL", "8", ["goodwill"]),
+    ("How does Berkshire Hathaway describe its insurance float?",
+     "BRK-B", None, ["float"]),
+    ("What dividend policy does Chevron describe?",
+     "CVX", None, ["dividend"]),        # XOM never entered the corpus
 ]
 
 
