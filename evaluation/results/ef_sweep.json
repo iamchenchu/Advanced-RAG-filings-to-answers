@@ -1,26 +1,26 @@
 [
   {
     "ef_search": 16,
-    "recall@10": 0.91,
-    "latency_p50_ms": 463.18,
-    "latency_p95_ms": 632.99
+    "recall@10": 0.935,
+    "latency_p50_ms": 41.89,
+    "latency_p95_ms": 58.97
   },
   {
     "ef_search": 32,
-    "recall@10": 0.985,
-    "latency_p50_ms": 725.73,
-    "latency_p95_ms": 840.26
+    "recall@10": 0.98,
+    "latency_p50_ms": 46.08,
+    "latency_p95_ms": 57.8
   },
   {
     "ef_search": 64,
-    "recall@10": 0.99,
-    "latency_p50_ms": 1226.17,
-    "latency_p95_ms": 1515.65
+    "recall@10": 0.985,
+    "latency_p50_ms": 63.88,
+    "latency_p95_ms": 84.33
   },
   {
     "ef_search": 128,
-    "recall@10": 1.0,
-    "latency_p50_ms": 2243.81,
-    "latency_p95_ms": 2597.21
+    "recall@10": 0.985,
+    "latency_p50_ms": 74.61,
+    "latency_p95_ms": 89.5
   }
 ]

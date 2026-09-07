@@ -3,19 +3,19 @@
     "config_name": "ef16",
     "ef_search": 16,
     "n_queries": 20,
-    "recall@1": 0.95,
-    "recall@5": 0.91,
-    "recall@10": 0.91,
-    "mrr": 0.95,
-    "latency_p50_ms": 463.18,
-    "latency_p95_ms": 632.99,
-    "latency_p99_ms": 648.34,
+    "recall@1": 1.0,
+    "recall@5": 0.94,
+    "recall@10": 0.935,
+    "mrr": 1.0,
+    "latency_p50_ms": 41.89,
+    "latency_p95_ms": 58.97,
+    "latency_p99_ms": 83.15,
     "embedding_model": "BAAI/bge-m3",
     "hnsw": {
       "m": 16,
       "ef_construct": 128
     },
-    "quantization": "none"
+    "quantization": "scalar"
   },
   "per_query": [
     {
@@ -28,8 +28,8 @@
     {
       "query": "How much revenue did the iPhone generate?",
       "recall@1": 1.0,
-      "recall@5": 1.0,
-      "recall@10": 1.0,
+      "recall@5": 0.4,
+      "recall@10": 0.3,
       "mrr": 1.0
     },
     {
@@ -48,10 +48,10 @@
     },
     {
       "query": "What is Apple's dividend and share repurchase program?",
-      "recall@1": 0.0,
-      "recall@5": 0.4,
-      "recall@10": 0.3,
-      "mrr": 0.0
+      "recall@1": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0
     },
     {
       "query": "How does Apple manage cybersecurity threats?",
@@ -63,7 +63,7 @@
     {
       "query": "What are the risks from competition in the smartphone market?",
       "recall@1": 1.0,
-      "recall@5": 0.6,
+      "recall@5": 0.8,
       "recall@10": 0.8,
       "mrr": 1.0
     },
@@ -78,7 +78,7 @@
       "query": "What is Apple's exposure to foreign exchange risk?",
       "recall@1": 1.0,
       "recall@5": 1.0,
-      "recall@10": 0.9,
+      "recall@10": 1.0,
       "mrr": 1.0
     },
     {
@@ -112,8 +112,8 @@
     {
       "query": "How many employees does Apple have?",
       "recall@1": 1.0,
-      "recall@5": 0.6,
-      "recall@10": 0.6,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
       "mrr": 1.0
     },
     {

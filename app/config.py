@@ -40,6 +40,9 @@ class Settings(BaseSettings):
     hnsw_full_scan_threshold: int = 10000
     hnsw_ef_search: int = 128
     quantization: str = "none"                     # none|scalar|product|binary
+    quantization_always_ram: bool = True
+    quantization_rescore: bool = True              # re-check top hits at full precision
+    quantization_rescore_limit: int = 100
 
     # embeddings
     embedding_backend: str = "fastembed"           # tei|fastembed|hash
