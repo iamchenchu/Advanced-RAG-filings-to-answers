@@ -124,3 +124,4 @@ tmp/
 scratch/
 notebooks/scratch/
 .ipynb_checkpoints/
+deploy/k8s/02-secret.yaml
