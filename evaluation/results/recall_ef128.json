@@ -4,18 +4,18 @@
     "ef_search": 128,
     "n_queries": 20,
     "recall@1": 1.0,
-    "recall@5": 1.0,
-    "recall@10": 1.0,
+    "recall@5": 0.99,
+    "recall@10": 0.985,
     "mrr": 1.0,
-    "latency_p50_ms": 2243.81,
-    "latency_p95_ms": 2597.21,
-    "latency_p99_ms": 2645.09,
+    "latency_p50_ms": 74.61,
+    "latency_p95_ms": 89.5,
+    "latency_p99_ms": 124.08,
     "embedding_model": "BAAI/bge-m3",
     "hnsw": {
       "m": 16,
       "ef_construct": 128
     },
-    "quantization": "none"
+    "quantization": "scalar"
   },
   "per_query": [
     {
@@ -57,7 +57,7 @@
       "query": "How does Apple manage cybersecurity threats?",
       "recall@1": 1.0,
       "recall@5": 1.0,
-      "recall@10": 1.0,
+      "recall@10": 0.9,
       "mrr": 1.0
     },
     {
@@ -147,8 +147,8 @@
     {
       "query": "What controls and procedures does management maintain?",
       "recall@1": 1.0,
-      "recall@5": 1.0,
-      "recall@10": 1.0,
+      "recall@5": 0.8,
+      "recall@10": 0.8,
       "mrr": 1.0
     },
     {

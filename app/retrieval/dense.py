@@ -29,6 +29,15 @@ def dense_search(query_vector: list[float], top_k: int,
         query_filter=build_filter(filters),          # PRE-filter, in-traversal
         search_params=models.SearchParams(
             hnsw_ef=ef_search or s.hnsw_ef_search,
+            # With quantized vectors, HNSW walks the compressed index (fast)
+            # but small quantization errors cap recall (~0.94 plateau measured).
+            # Rescoring re-ranks the oversampled top candidates against the
+            # full-precision vectors - recovering recall for ~1ms extra.
+            quantization=models.QuantizationSearchParams(
+                ignore=False,
+                rescore=s.quantization_rescore,
+                oversampling=2.0,
+            ) if s.quantization != "none" else None,
             exact=exact,                             # True = flat ground truth
         ),
         with_payload=True,

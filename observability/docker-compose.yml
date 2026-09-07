@@ -1,0 +1,37 @@
+# Observability stack for the RAG system:
+#   prometheus - scrapes and stores the API's /metrics
+#   grafana    - dashboards, fully provisioned as code (no manual clicking)
+#   jaeger     - trace storage + UI; receives OpenTelemetry OTLP on 4318
+# The app itself needs no changes for metrics (already exposed) and only the
+# lightweight tracing module (app/observability/tracing.py) for traces.
+services:
+  prometheus:
+    image: prom/prometheus:v3.2.0
+    ports: ["9090:9090"]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prom_data:/prometheus
+
+  grafana:
+    image: grafana/grafana:11.5.1
+    ports: ["3001:3000"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"       # local dev convenience only
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./dashboards:/var/lib/grafana/dashboards
+      - graf_data:/var/lib/grafana
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    ports:
+      - "16686:16686"   # trace UI
+      - "4318:4318"     # OTLP (OpenTelemetry protocol) HTTP intake
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+
+volumes:
+  prom_data:
+  graf_data:

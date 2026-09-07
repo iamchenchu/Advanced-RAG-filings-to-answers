@@ -36,6 +36,8 @@ async def _refresh_gauges() -> None:
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
+    from app.observability.tracing import init_tracing
+    print("otel tracing:", "live" if init_tracing() else "off (no endpoint)")
     await get_pool()
     await run_migrations()
     with contextlib.suppress(Exception):        # qdrant down: API still boots,

@@ -5,17 +5,17 @@
     "n_queries": 20,
     "recall@1": 1.0,
     "recall@5": 0.98,
-    "recall@10": 0.985,
+    "recall@10": 0.98,
     "mrr": 1.0,
-    "latency_p50_ms": 725.73,
-    "latency_p95_ms": 840.26,
-    "latency_p99_ms": 1074.48,
+    "latency_p50_ms": 46.08,
+    "latency_p95_ms": 57.8,
+    "latency_p99_ms": 63.09,
     "embedding_model": "BAAI/bge-m3",
     "hnsw": {
       "m": 16,
       "ef_construct": 128
     },
-    "quantization": "none"
+    "quantization": "scalar"
   },
   "per_query": [
     {
@@ -57,7 +57,7 @@
       "query": "How does Apple manage cybersecurity threats?",
       "recall@1": 1.0,
       "recall@5": 1.0,
-      "recall@10": 1.0,
+      "recall@10": 0.9,
       "mrr": 1.0
     },
     {
