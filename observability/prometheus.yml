@@ -1,6 +1,5 @@
-# Prometheus scrape config.
-# host.docker.internal = "the Mac itself" as seen from inside a container -
-# the RAG API runs on the host, the observability stack runs in Docker.
+# Prometheus scrape + alerting config.
+# host.docker.internal = the Mac (where the RAG API runs on :8000).
 global:
   scrape_interval: 5s
 
@@ -13,8 +12,8 @@ scrape_configs:
     static_configs:
       - targets: ["host.docker.internal:8000"]
 
-  # workers expose their own registries when started with METRICS_PORT set
-  # (each process has its own counters - the API cannot see worker metrics)
-  - job_name: rag-workers
-    static_configs:
-      - targets: ["host.docker.internal:9101", "host.docker.internal:9102"]
+  # Workers expose their own registry when METRICS_PORT is set
+  # (workers/*.py _maybe_serve_metrics). Enable once run with a stable port.
+  # - job_name: rag-workers
+  #   static_configs:
+  #     - targets: ["host.docker.internal:9100"]

@@ -1,26 +1,25 @@
-# Alerting rules for the two SILENT failure modes - no exceptions, no error
-# rates, just work quietly not happening. These two gauges are the only
-# reliable detectors (see COMPONENTS.md section 6 / interview-prep 05).
+# Alert rules on the metrics that catch SILENT failure - no exception, no error
+# rate, just quietly stale retrieval. These are the two gauges from the PRD.
 groups:
   - name: rag-silent-failures
     rules:
-      - alert: IngestionStalled
-        expr: rag_ingestion_jobs_pending > 10
-        for: 15m
+      - alert: OutboxSyncStalled
+        expr: rag_outbox_pending_total > 500
+        for: 5m
+        labels: { severity: critical }
+        annotations:
+          summary: "Qdrant sync is falling behind - retrieval is going stale"
+          description: "{{ $value }} chunks are written to Postgres but not yet in Qdrant. The outbox worker is likely dead or Qdrant is unreachable."
+      - alert: IngestionQueueGrowing
+        expr: rag_ingestion_jobs_pending > 100
+        for: 10m
         labels: { severity: warning }
         annotations:
-          summary: "Ingestion queue not draining"
-          description: "{{ $value }} jobs pending for 15m - workers dead or stuck. Check: kubectl -n llm-rag get pods / worker logs."
-      - alert: QdrantSyncStalled
-        expr: rag_outbox_pending_total > 100
-        for: 15m
-        labels: { severity: critical }
-        annotations:
-          summary: "Vector outbox not draining - retrieval going stale"
-          description: "{{ $value }} chunks pending Qdrant sync for 15m. New/changed documents are invisible to search. Check outbox worker + Qdrant health."
+          summary: "Ingestion jobs are piling up - workers may be dead"
+          description: "{{ $value }} jobs pending for 10m. Scale workers or check for a poison document."
       - alert: RagApiDown
         expr: up{job="rag-api"} == 0
-        for: 2m
+        for: 1m
         labels: { severity: critical }
         annotations:
-          summary: "RAG API scrape target down"
+          summary: "RAG API is not being scraped - the service may be down"
